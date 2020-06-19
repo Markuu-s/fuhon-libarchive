@@ -8,6 +8,7 @@
 .deps/
 .libs/
 .dirstamp
+.idea/
 Makefile
 Makefile.in
 aclocal.m4
@@ -36,6 +37,7 @@ config.log
 config.status
 configure
 cpio/test/list.h
+cmake-build-debug/
 libarchive/test/list.h
 libtool
 stamp-h1
