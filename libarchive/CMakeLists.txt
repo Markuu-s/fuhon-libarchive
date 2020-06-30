@@ -295,7 +295,7 @@ IF(ENABLE_INSTALL)
           PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
           FRAMEWORK DESTINATION ${CMAKE_INSTALL_PREFIX})
   INSTALL_MAN(${libarchive_MANS})
-  INSTALL(FILES ${include_HEADERS} DESTINATION include)
+  INSTALL(FILES ${include_HEADERS} DESTINATION include/libarchive)
 
   install(
     FILES "${project_config}" "${version_config}"
