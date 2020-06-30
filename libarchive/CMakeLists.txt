@@ -237,7 +237,12 @@ ENDIF()
 
 # Libarchive is a shared library
 ADD_LIBRARY(archive SHARED ${libarchive_SOURCES} ${include_HEADERS})
-TARGET_INCLUDE_DIRECTORIES(archive PUBLIC .)
+# TARGET_INCLUDE_DIRECTORIES(archive PUBLIC .)
+target_include_directories(
+  archive PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDE_DIR}>
+)
 TARGET_LINK_LIBRARIES(archive ${ADDITIONAL_LIBS})
 SET_TARGET_PROPERTIES(archive PROPERTIES SOVERSION ${SOVERSION})
 
@@ -275,18 +280,31 @@ IF(ENABLE_INSTALL)
   )
 
   configure_package_config_file(
-    "libarchive/Config.cmake.in"
+    "Config.cmake.in"
     "${project_config}"
     INSTALL_DESTINATION "${config_install_dir}"
   )
 
   # How to install the libraries
   INSTALL(TARGETS archive archive_static
+          EXPORT "${TARGETS_EXPORT_NAME}"
           RUNTIME DESTINATION bin
           LIBRARY DESTINATION lib
           ARCHIVE DESTINATION lib)
   INSTALL_MAN(${libarchive_MANS})
   INSTALL(FILES ${include_HEADERS} DESTINATION include)
+
+  install(
+    FILES "${project_config}" "${version_config}"
+    DESTINATION "${config_install_dir}"
+  )
+
+  install(
+    EXPORT "${TARGETS_EXPORT_NAME}"
+    NAMESPACE "${namespace}"
+    DESTINATION "${config_install_dir}"
+  )
+
 ENDIF()
 
 add_subdirectory(test)
