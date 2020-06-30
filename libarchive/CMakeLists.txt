@@ -275,7 +275,7 @@ IF(ENABLE_INSTALL)
   )
 
   configure_package_config_file(
-    "Config.cmake.in"
+    "libarchive/Config.cmake.in"
     "${project_config}"
     INSTALL_DESTINATION "${config_install_dir}"
   )
